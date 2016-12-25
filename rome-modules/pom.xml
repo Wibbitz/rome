@@ -8,10 +8,10 @@
         <version>1.7.0</version>
     </parent>
 
-    <artifactId>rome-modules</artifactId>
+    <artifactId>rome-modules-wibbitz</artifactId>
     <packaging>jar</packaging>
 
-    <name>rome-modules</name>
+    <name>rome-modules-wibbitz</name>
 
     <description>Plugin collection for the ROME RSS and Atom Utilities</description>
 

@@ -18,6 +18,7 @@ package com.rometools.rome.io.impl;
 
 import java.util.List;
 
+import org.jdom2.CDATA;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
@@ -42,6 +43,8 @@ public class RSS090Generator extends BaseWireFeedGenerator {
     private static final Namespace RDF_NS = Namespace.getNamespace("rdf", RDF_URI);
     private static final Namespace RSS_NS = Namespace.getNamespace(RSS_URI);
     private static final Namespace CONTENT_NS = Namespace.getNamespace("content", CONTENT_URI);
+    
+    private boolean encodeRssInCDATA = false;
 
     public RSS090Generator() {
         this("rss_0.9");
@@ -55,8 +58,17 @@ public class RSS090Generator extends BaseWireFeedGenerator {
     public Document generate(final WireFeed feed) throws FeedException {
         final Channel channel = (Channel) feed;
         final Element root = createRootElement(channel);
+        if(feed.getEncodeTitleAndDescInCData()){
+        	encodeRssInCDATA = true;
+        }
+        else{
+        	encodeRssInCDATA = false;
+        }
         populateFeed(channel, root);
         purgeUnusedNamespaceDeclarations(root);
+        for(Namespace additionalNameSpace:feed.getAdditionalNameSpaces()){
+        	root.addNamespaceDeclaration(additionalNameSpace);
+        }
         return createDocument(root);
     }
 
@@ -223,7 +235,8 @@ public class RSS090Generator extends BaseWireFeedGenerator {
     protected void populateItem(final Item item, final Element eItem, final int index) {
         final String title = item.getTitle();
         if (title != null) {
-            eItem.addContent(generateSimpleElement("title", title));
+            //eItem.addContent(generateSimpleElement("title", title));
+        	eItem.addContent(generateSimpleCDATAElement("title", title));
         }
         final String link = item.getLink();
         if (link != null) {
@@ -236,6 +249,15 @@ public class RSS090Generator extends BaseWireFeedGenerator {
         final Element element = new Element(name, getFeedNamespace());
         element.addContent(value);
         return element;
+    }
+    protected Element generateSimpleCDATAElement(final String name, final String value) {
+    	if(encodeRssInCDATA){ 
+    		final Element element = new Element(name, getFeedNamespace());
+            CDATA cdata = new CDATA(value);
+            element.addContent(cdata);
+            return element;    		
+    	}
+    	return generateSimpleElement(name, value);        
     }
 
     protected void checkChannelConstraints(final Element eChannel) throws FeedException {

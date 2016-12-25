@@ -18,9 +18,11 @@
 package com.rometools.rome.feed;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 import com.rometools.rome.feed.impl.ObjectBean;
 import com.rometools.rome.feed.module.Extendable;
@@ -49,6 +51,9 @@ public abstract class WireFeed implements Cloneable, Serializable, Extendable {
     private String styleSheet;
     private List<Module> modules;
     private List<Element> foreignMarkup;
+    
+    private List<Namespace> additionalNameSpaces = new ArrayList<Namespace>();
+    private boolean encodeTitleAndDescInCData = false;
 
     /**
      * Default constructor, for bean cloning purposes only.
@@ -261,5 +266,19 @@ public abstract class WireFeed implements Cloneable, Serializable, Extendable {
     public void setStyleSheet(final String styleSheet) {
         this.styleSheet = styleSheet;
     }
+    public boolean getEncodeTitleAndDescInCData() {
+		return encodeTitleAndDescInCData;
+	}
 
+	public void setEncodeTitleAndDescInCData(boolean encodeTitleAndDescInCData) {
+		this.encodeTitleAndDescInCData = encodeTitleAndDescInCData;
+	}
+
+	public List<Namespace> getAdditionalNameSpaces() {
+		return additionalNameSpaces;
+	}
+
+	public void setAdditionalNameSpaces(List<Namespace> additionalNameSpaces) {
+		this.additionalNameSpaces = additionalNameSpaces;
+	}
 }

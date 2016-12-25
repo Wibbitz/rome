@@ -43,7 +43,17 @@ public class FeedGenerators extends PluginManager<WireFeedGenerator> {
     }
 
     public WireFeedGenerator getGenerator(final String feedType) {
-        return getPlugin(feedType);
+        //return getPlugin(feedType);
+    	  try {
+  			return getPlugin(feedType).getClass().newInstance();
+  		} catch (InstantiationException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		} catch (IllegalAccessException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+  		return null;    	
     }
 
     @Override
