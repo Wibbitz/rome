@@ -163,6 +163,7 @@ public class MediaContent implements Serializable {
     /* the MIME type of the resource */
     private String type = null;
     private boolean defaultContent;
+	private Boolean hasSyndication;
 
 
     /**
@@ -597,4 +598,11 @@ public class MediaContent implements Serializable {
 
         return tsBean.toString();
     }
+
+	public void setHasSyndication(Boolean hasSyndication) {
+		this.hasSyndication = hasSyndication;		
+	}
+	public Boolean getHasSyndication(){
+		return this.hasSyndication;
+	}
 }

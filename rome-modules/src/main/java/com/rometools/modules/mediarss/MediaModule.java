@@ -35,6 +35,7 @@ import com.rometools.rome.feed.module.Module;
 public interface MediaModule extends Module {
     // the URI of the MediaRSS specification as hosted by yahoo
     public final static String URI = "http://search.yahoo.com/mrss/";
+    public final static String MICROSOFT_URI = "http://schemas.ingestion.microsoft.com/common/";
 
     /**
      * Returns Metadata associated with the feed.

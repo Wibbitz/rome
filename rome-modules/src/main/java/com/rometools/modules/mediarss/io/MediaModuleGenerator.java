@@ -28,8 +28,8 @@ import org.jdom2.Element;
 import org.jdom2.Namespace;
 
 import com.rometools.modules.mediarss.MediaEntryModule;
-import com.rometools.modules.mediarss.MediaModule;
 import com.rometools.modules.mediarss.types.Category;
+import com.rometools.modules.mediarss.MediaModule;
 import com.rometools.modules.mediarss.types.Credit;
 import com.rometools.modules.mediarss.types.MediaContent;
 import com.rometools.modules.mediarss.types.MediaGroup;
@@ -47,10 +47,12 @@ import com.rometools.rome.io.ModuleGenerator;
 public class MediaModuleGenerator implements ModuleGenerator {
 
     private static final Namespace NS = Namespace.getNamespace("media", MediaModule.URI);
+    private static final Namespace MICROSOFT_NS = Namespace.getNamespace("mi", MediaModule.MICROSOFT_URI);
     private static final Set<Namespace> NAMESPACES = new HashSet<Namespace>();
 
     static {
         NAMESPACES.add(NS);
+        NAMESPACES.add(MICROSOFT_NS);
     }
 
     @Override
@@ -114,6 +116,11 @@ public class MediaModuleGenerator implements ModuleGenerator {
         }
 
         generateMetadata(c.getMetadata(), mc);
+        
+        if(c.getHasSyndication()!=null){
+        	final Element syndicationElem = generateSimpleMicrosoftElement("hasSyndication", "1");
+        	mc.addContent(syndicationElem);
+        }
         e.addContent(mc);
     }
 
@@ -253,6 +260,12 @@ public class MediaModuleGenerator implements ModuleGenerator {
 
     protected Element generateSimpleElement(final String name, final String value) {
         final Element element = new Element(name, NS);
+        element.addContent(value);
+
+        return element;
+    }
+    protected Element generateSimpleMicrosoftElement(final String name, final String value) {
+        final Element element = new Element(name, MICROSOFT_NS);
         element.addContent(value);
 
         return element;
