@@ -118,7 +118,7 @@ public class MediaModuleGenerator implements ModuleGenerator {
         generateMetadata(c.getMetadata(), mc);
         
         if(c.getHasSyndication()!=null){
-        	final Element syndicationElem = generateSimpleMicrosoftElement("hasSyndication", "1");
+        	final Element syndicationElem = generateSimpleMicrosoftElement("hasSyndicationRights", "1");
         	mc.addContent(syndicationElem);
         }
         e.addContent(mc);
