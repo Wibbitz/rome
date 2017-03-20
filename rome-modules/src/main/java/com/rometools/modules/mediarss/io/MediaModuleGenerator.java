@@ -21,8 +21,11 @@
  */
 package com.rometools.modules.mediarss.io;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collector;
+import static java.util.stream.Collectors.*;
 
 import org.jdom2.Element;
 import org.jdom2.Namespace;
@@ -120,6 +123,12 @@ public class MediaModuleGenerator implements ModuleGenerator {
         if(c.getHasSyndication()!=null){
         	final Element syndicationElem = generateSimpleMicrosoftElement("hasSyndicationRights", "1");
         	mc.addContent(syndicationElem);
+        }
+        if(c.getMediaRights()!=null)
+        {        	
+        	String mediaRightsAsString = c.getMediaRights().stream().collect(joining(", "));
+        	final Element mediaRights = generateSimpleElement("rights",mediaRightsAsString);
+        	mc.addContent(mediaRights);
         }
         e.addContent(mc);
     }

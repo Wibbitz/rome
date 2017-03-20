@@ -22,6 +22,8 @@
 package com.rometools.modules.mediarss.types;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.rometools.rome.feed.impl.EqualsBean;
 import com.rometools.rome.feed.impl.ToStringBean;
@@ -164,6 +166,7 @@ public class MediaContent implements Serializable {
     private String type = null;
     private boolean defaultContent;
 	private Boolean hasSyndication;
+	private List<String> mediaRights;
 
 
     /**
@@ -604,5 +607,12 @@ public class MediaContent implements Serializable {
 	}
 	public Boolean getHasSyndication(){
 		return this.hasSyndication;
+	}
+	public void setMediaRights(List<String> mediaRights)
+	{
+		this.mediaRights  = mediaRights;
+	}
+	public List<String> getMediaRights(){
+		return this.mediaRights;
 	}
 }
